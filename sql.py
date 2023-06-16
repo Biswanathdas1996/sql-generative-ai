@@ -1,8 +1,7 @@
 import os
-import openai
 import pandas as pd 
 
-openai.api_key="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"
+
 df = pd.read_csv("sales_data_sample.csv")
 # print(df)
 

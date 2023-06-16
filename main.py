@@ -2,9 +2,12 @@ import os
 import openai
 import pandas as pd 
 
-# openai.api_key="f93979cbf9894257affd4fee8b4e08fb"
-openai.api_key="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"
-df = pd.read_csv("sales_data_sample.csv")
+os.environ["OPENAI_KEY"] = "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"
+openai.api_key = os.getenv("OPENAI_KEY")
+
+
+
+df = pd.read_csv("sales_data.csv")
 # print(df)
 
 import sqlalchemy
@@ -14,11 +17,6 @@ from sqlalchemy import text
 
 temp_db = create_engine('sqlite:///:memory:', echo=True)
 data = df.to_sql(name="Sales", con=temp_db)
-
-# with temp_db.connect() as conn:
-#     result = conn.execute(text("SELECT SUM(QUANTITY * UNIT_PRICE) AS TotalSales FROM Sales"))
-
-# result.all()
 
 
 def create_table_defination(df):
@@ -57,7 +55,8 @@ print(combine_prompts(df,nlp_text))
 
 
 responce = openai.Completion.create(
-    engine="davinci",
+    # engine="davinci",
+    engine="text-davinci-003",
     prompt=combine_prompts(df,nlp_text),
     temperature=0,
     max_tokens=150,
