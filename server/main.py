@@ -10,6 +10,7 @@ import json
 import env
 import csv_utils
 import similarity_finder
+import csv
 
 from flask import Flask, request, jsonify
 
@@ -21,6 +22,13 @@ openai.api_key = os.environ['OPEN_AI_KEY']
 
 app = Flask(__name__)
 
+# Enable CORS for all routes
+@app.after_request
+def add_cors_headers(response):
+    response.headers['Access-Control-Allow-Origin'] = '*'
+    response.headers['Access-Control-Allow-Headers'] = 'Content-Type,Authorization'
+    response.headers['Access-Control-Allow-Methods'] = 'GET,POST,PUT,DELETE,OPTIONS'
+    return response
 
 @app.route('/api/generate', methods=['POST'])
 def callData():
@@ -88,6 +96,22 @@ def upload_file():
 def get_data():
     csv_data = csv_utils.read_csv('data/SavedData/data.csv')
     return jsonify(csv_data)
+
+@app.route('/api/update-csv-data', methods=['POST'])
+def update_csv():
+    # Retrieve the data from the request
+    data = request.get_json()
+
+    # Specify the file path to save the CSV file
+    file_path = 'responses/QA.csv'
+
+    with open(file_path, 'w', newline='') as file:
+        writer = csv.writer(file)
+        writer.writerow([])
+        for item in data:
+            writer.writerow([item["input"], item["output"]])
+
+    return 'CSV file saved successfully'
 
 
 @app.route('/api/get-past-qa', methods=['GET'])

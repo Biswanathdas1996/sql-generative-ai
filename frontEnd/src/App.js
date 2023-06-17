@@ -1,8 +1,12 @@
 import React from "react";
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, Link } from "react-router-dom";
 import Home from "./pages/Home";
 import Redux from "./pages/Redux";
 import ApiCall from "./pages/ApiCall";
+import CsvData from "./pages/CsvData";
+import SQLData from "./pages/SQLData";
+import OpenAI from "./pages/OpenAI";
+import EditSql from "./pages/EditSql";
 import { site_text } from "./utils/languageMapper";
 import { useDispatch, useSelector } from "react-redux";
 import { updateLanguage } from "./redux/slices/config/configSlice";
@@ -30,15 +34,40 @@ function App() {
 
   return (
     <>
-      <div>
-        <button onClick={() => changeLang("English")}>English</button>
-        <button onClick={() => changeLang("Hindi")}>Hindi</button>
-        <button onClick={() => changeLang("Bengali")}>Bengali</button>
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "space-around",
+          margin: "2rem",
+        }}
+      >
+        <Link to="/" className="header-link">
+          Home
+        </Link>
+
+        <Link to="/csv-data" className="header-link">
+          {" "}
+          Uploaded Data
+        </Link>
+
+        <Link to="/search" className="header-link">
+          {" "}
+          Search
+        </Link>
+
+        <Link to="/sql-data" className="header-link">
+          Last Search
+        </Link>
       </div>
+
       <Routes>
         <Route exact path="/" element={<Home />} />
         <Route exact path="/redux" element={<Redux />} />
         <Route exact path="/api" element={<ApiCall />} />
+        <Route exact path="/csv-data" element={<CsvData />} />
+        <Route exact path="/sql-data" element={<SQLData />} />
+        <Route exact path="/search" element={<OpenAI />} />
+        <Route exact path="/edit-sql" element={<EditSql />} />
       </Routes>
     </>
   );
