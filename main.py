@@ -1,92 +1,73 @@
+# Dataset based on #https://www.kaggle.com/datasets/kyanyoga/sample-sales-data
+
 import os
+import logging
+
+import pandas as pd
 import openai
-import pandas as pd 
 
-os.environ["OPENAI_KEY"] = "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"
-openai.api_key = os.getenv("OPENAI_KEY")
+import db_utils
+import openai_utils
+import json
+from flask import Flask, request, jsonify
 
-
-
-df = pd.read_csv("sales_data.csv")
-# print(df)
-
-import sqlalchemy
-
-from sqlalchemy import create_engine
-from sqlalchemy import text
-
-temp_db = create_engine('sqlite:///:memory:', echo=True)
-data = df.to_sql(name="Sales", con=temp_db)
+logging.basicConfig(format='%(asctime)s - %(message)s', level=logging.INFO)
+openai.api_key = "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"
 
 
-def create_table_defination(df):
-    prompt = """### sqlite table, with its properties:
-#
-# Sales({})
-#
-## Acceptable date format is DD-MM-YYYY
-#
-## where DATE is type TEXT
-#
-""".format(",".join(str(col) for col in df.columns))
+app = Flask(__name__)
 
-    return prompt
+@app.route('/api/sql', methods=['POST'])
+def callData():
+    requestData = request.json
+    nlp_text = requestData.get('nlp_text')
+    
+    logging.info("Loading data...")
+    df = pd.read_csv("data/SavedData/data.csv")
+    logging.info(f"Data Format: {df.shape}")
 
-# print(create_table_defination(df))
+    logging.info("Converting to database...")
+    database = db_utils.dataframe_to_database(df, "Sales")
+    
+    fixed_sql_prompt = openai_utils.create_table_definition_prompt(df, "Sales")
+    logging.info(f"Fixed SQL Prompt: {fixed_sql_prompt}")
 
-def prompt_input():
-    nlp_text = input("Enter the info you want: ")
-    return nlp_text
+    logging.info("Waiting for user input...")
+    user_input = nlp_text
+    final_prompt = openai_utils.combine_prompts(fixed_sql_prompt, user_input)
+    logging.info(f"Final Prompt: {final_prompt}")
 
-# prompt_input()
+    logging.info("Sending to OpenAI...")
+    response = openai_utils.send_to_openai(final_prompt)
+    proposed_query = response["choices"][0]["text"]
+    proposed_query_postprocessed = db_utils.handle_response(response)
+    logging.info(f"Response obtained. Proposed sql query: {proposed_query_postprocessed}")
+    result = db_utils.execute_query(database, proposed_query_postprocessed, df)
+    logging.info(f"Result: {result}")
+    print(result)
+    return jsonify(result)
+    
 
+@app.route('/upload', methods=['POST'])
+def upload_file():
+    # requestData = request.json
+    # nlp_text = requestData.get('nlp_text')
+    print("=================")
+    print(request.data)
+    print("=================")
+    if 'file' not in request.files:
+        return 'No file provided', 400
 
-def combine_prompts(df, query_prompt):
-    defination = create_table_defination(df)
-    query_init_string = f"### A query to answer: {query_prompt}\nSELECT"
-    return defination + query_init_string
+    file = request.files['file']
+    if file.filename == '':
+        return 'No file selected', 400
 
+    # Specify the folder where the file should be saved
+    save_folder = 'data/SavedData/'
 
+    file.save(save_folder + "data.csv")
+    return jsonify({"satus":"success"}), 200
 
-nlp_text = prompt_input()
-print("------------Prompt----------->") 
-print(combine_prompts(df,nlp_text))
-
-
-
-responce = openai.Completion.create(
-    # engine="davinci",
-    engine="text-davinci-003",
-    prompt=combine_prompts(df,nlp_text),
-    temperature=0,
-    max_tokens=150,
-    top_p=1.0,
-    frequency_penalty=0.0,
-    presence_penalty=0.0,
-    stop=["#", ";"]
-)
-print("------------responce from GPT st----------->")
-print(responce)
-print("------------responce from GPT ed----------->")
-
-def handle_responce(responce):
-    # query = responce["choices"][0]["text"].replace('\n', ' ').replace('  ', ' ').strip()
-    query = text = responce['choices'][0]['text'].split('\n')[0]
-    extracted_text = query.split('\n\n', 1)[0]
-    if extracted_text.startswith(" "):
-        extracted_text = "SELECT"+ extracted_text
-        
-    return extracted_text
-
-formatted_query = handle_responce(responce)
-
-print("------------formatted_query start----------->") 
-print(formatted_query)
-print("------------formatted_query end----------->")
-
-with temp_db.connect() as conn:
-    result_output = conn.execute(text(formatted_query))
-print("------------Output resilt 1----------->")    
-print(result_output.all())  
- 
- 
+    
+if __name__ == '__main__':
+    app.run()
