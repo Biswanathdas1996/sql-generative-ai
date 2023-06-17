@@ -1,5 +1,3 @@
-# Dataset based on #https://www.kaggle.com/datasets/kyanyoga/sample-sales-data
-
 import os
 import logging
 
@@ -10,6 +8,8 @@ import db_utils
 import openai_utils
 import json
 import env
+import csv_utils
+
 from flask import Flask, request, jsonify
 
 logging.basicConfig(format='%(asctime)s - %(message)s', level=logging.INFO)
@@ -20,7 +20,7 @@ openai.api_key = os.environ['OPEN_AI_KEY']
 
 app = Flask(__name__)
 
-@app.route('/api/sql', methods=['POST'])
+@app.route('/api/generate', methods=['POST'])
 def callData():
     requestData = request.json
     nlp_text = requestData.get('nlp_text')
@@ -51,13 +51,9 @@ def callData():
     return jsonify(result)
     
 
-@app.route('/upload', methods=['POST'])
+@app.route('/upload-csv', methods=['POST'])
 def upload_file():
-    # requestData = request.json
-    # nlp_text = requestData.get('nlp_text')
-    print("=================")
-    print(request.data)
-    print("=================")
+   
     if 'file' not in request.files:
         return 'No file provided', 400
 
@@ -71,6 +67,12 @@ def upload_file():
     file.save(save_folder + "data.csv")
     return jsonify({"satus":"success"}), 200
 
+
+
+@app.route('/api/csv-data', methods=['GET'])
+def get_data():
+    csv_data = csv_utils.read_csv('data/SavedData/data.csv')
+    return jsonify(csv_data)
     
 if __name__ == '__main__':
     app.run()
