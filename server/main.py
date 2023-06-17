@@ -9,6 +9,7 @@ import openai_utils
 import json
 import env
 import csv_utils
+import similarity_finder
 
 from flask import Flask, request, jsonify
 
@@ -19,6 +20,7 @@ openai.api_key = os.environ['OPEN_AI_KEY']
 
 
 app = Flask(__name__)
+
 
 @app.route('/api/generate', methods=['POST'])
 def callData():
@@ -40,15 +42,28 @@ def callData():
     final_prompt = openai_utils.combine_prompts(fixed_sql_prompt, user_input)
     logging.info(f"Final Prompt: {final_prompt}")
 
-    logging.info("Sending to OpenAI...")
-    response = openai_utils.send_to_openai(final_prompt)
-    proposed_query = response["choices"][0]["text"]
-    proposed_query_postprocessed = db_utils.handle_response(response)
+    checkSimiliraty = similarity_finder.finder(nlp_text)
+    print("checkSimiliraty['score'] ==============================>",checkSimiliraty['score'])
+    proposed_query_postprocessed = None
+    if checkSimiliraty['score'] > 0.90:
+        print("Take SQL from database",checkSimiliraty['sql'])
+        proposed_query_postprocessed = checkSimiliraty['sql']
+    else:
+        logging.info("Sending to OpenAI...")
+        response = openai_utils.send_to_openai(final_prompt)
+        # proposed_query = response["choices"][0]["text"]
+        proposed_query_postprocessed = db_utils.handle_response(response)
+        csv_utils.add_text_to_csv("responses/QA.csv",nlp_text, proposed_query_postprocessed)
+    
+    
     logging.info(f"Response obtained. Proposed sql query: {proposed_query_postprocessed}")
     result = db_utils.execute_query(database, proposed_query_postprocessed, df)
     logging.info(f"Result: {result}")
     print(result)
+   
     return jsonify(result)
+
+   
     
 
 @app.route('/upload-csv', methods=['POST'])
@@ -73,6 +88,20 @@ def upload_file():
 def get_data():
     csv_data = csv_utils.read_csv('data/SavedData/data.csv')
     return jsonify(csv_data)
+
+
+@app.route('/api/get-past-qa', methods=['GET'])
+def get_past_data():
+    csv_data = csv_utils.read_csv('responses/QA.csv')
+    converted_data_1 = [list(obj.values())[0] for obj in csv_data]
+    converted_data = [{"input": item[0], "output": item[1]} for item in converted_data_1]
+    return jsonify(converted_data)
+
+
+
+
+
+
     
 if __name__ == '__main__':
     app.run()
