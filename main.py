@@ -9,10 +9,13 @@ import openai
 import db_utils
 import openai_utils
 import json
+import env
 from flask import Flask, request, jsonify
 
 logging.basicConfig(format='%(asctime)s - %(message)s', level=logging.INFO)
-openai.api_key = "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"
+
+env.addEnv()
+openai.api_key = os.environ['OPEN_AI_KEY']
 
 
 app = Flask(__name__)
