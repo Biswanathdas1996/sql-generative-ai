@@ -42,18 +42,18 @@ const DynamicTable = ({ data }) => {
   return (
     <div>
       <TextField
-        label="Search"
+        label="Search from below table"
         value={searchTerm}
         onChange={(e) => setSearchTerm(e.target.value)}
-        style={{ marginBottom: "1rem" }}
+        style={{ marginBottom: "1rem", width: "89vw" }}
       />
       <TableContainer component={Paper}>
         <Table>
-          <TableHead>
+          <TableHead style={{ background: "#283747" }}>
             <TableRow>
-              <TableCell>Serial No</TableCell>
+              <TableCell style={{ color: "white" }}>#</TableCell>
               {Object.keys(data[0]).map((header) => (
-                <TableCell key={header}>
+                <TableCell key={header} style={{ color: "white" }}>
                   <b>{header}</b>
                 </TableCell>
               ))}

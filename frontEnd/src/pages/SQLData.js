@@ -1,5 +1,6 @@
 import React from "react";
 import DynamicTable from "../components/DynamicTable";
+import Button from "@mui/material/Button";
 import { get, post } from "../helper/apiHelper";
 
 const CsvData = () => {
@@ -23,10 +24,14 @@ const CsvData = () => {
   return (
     <center>
       <div style={{ width: "90%" }}>
-        <button onClick={() => (window.location.href = "/#/edit-sql")}>
+        <Button
+          onClick={() => (window.location.href = "/#/edit-sql")}
+          style={{ float: "right", backgroundColor: "#283747" }}
+          variant="contained"
+        >
           Edit
-        </button>
-        <h1>Previous search Data</h1>
+        </Button>
+        <h1 style={{ float: "left" }}>Previous search Data</h1>
         {data && data?.length > 0 ? (
           <DynamicTable data={data} />
         ) : data?.length === 0 ? (

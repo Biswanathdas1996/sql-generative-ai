@@ -1,5 +1,8 @@
 import React, { useState } from "react";
 import { get, post } from "../helper/apiHelper";
+import Box from "@mui/material/Box";
+import TextField from "@mui/material/TextField";
+import Button from "@mui/material/Button";
 
 const UpdateDataForm = ({ data }) => {
   const [updatedData, setUpdatedData] = useState(data);
@@ -25,45 +28,69 @@ const UpdateDataForm = ({ data }) => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      {updatedData &&
-        updatedData?.map((item, index) => (
-          <div key={index} style={{ marginTop: 25, display: "flex" }}>
-            <label style={{ display: "grid" }}>
-              Input:
-              <input
-                type="text"
-                value={item.input}
-                onChange={(e) =>
-                  handleInputChange(index, "input", e.target.value)
-                }
+    <Box>
+      <form onSubmit={handleSubmit}>
+        <div>
+          <Button
+            type="submit"
+            variant="contained"
+            style={{
+              float: "right",
+              marginRight: "3rem",
+              backgroundColor: "#283747",
+            }}
+          >
+            Update
+          </Button>
+        </div>
+        <br />
+        <div>
+          {updatedData &&
+            updatedData?.map((item, index) => (
+              <div
+                key={index}
                 style={{
-                  padding: 8,
-                  width: "30rem",
+                  marginTop: 25,
+                  display: "flex",
+                  justifyContent: "space-around",
                 }}
-              />
-            </label>
-            <br />
-            <label style={{ display: "grid" }}>
-              Output:
-              <input
-                type="text"
-                value={item.output}
-                onChange={(e) =>
-                  handleInputChange(index, "output", e.target.value)
-                }
-                style={{
-                  padding: 8,
-                  width: "40rem",
-                }}
-              />
-            </label>
-          </div>
-        ))}
-      <br />
-      <br />
-      <button type="submit">Submit</button>
-    </form>
+              >
+                <label style={{ display: "grid" }}>
+                  <TextField
+                    type="text"
+                    label="Input prompt"
+                    value={item.input}
+                    onChange={(e) =>
+                      handleInputChange(index, "input", e.target.value)
+                    }
+                    style={{
+                      padding: 8,
+                      width: "40rem",
+                    }}
+                  />
+                </label>
+                <br />
+                <label style={{ display: "grid" }}>
+                  <TextField
+                    label="Output query"
+                    type="text"
+                    value={item.output}
+                    onChange={(e) =>
+                      handleInputChange(index, "output", e.target.value)
+                    }
+                    style={{
+                      padding: 8,
+                      width: "40rem",
+                    }}
+                  />
+                </label>
+              </div>
+            ))}
+        </div>
+        <br />
+        <br />
+      </form>
+    </Box>
   );
 };
 
@@ -89,10 +116,13 @@ const App = () => {
   };
   console.log("data------->", data);
   return (
-    <center>
-      <h1>Update Data</h1>
-      {data && <UpdateDataForm data={data} onUpdateData={handleUpdateData} />}
-    </center>
+    <>
+      <dev>
+        <h1 style={{ marginLeft: "3rem" }}>Update Data</h1>
+      </dev>
+      <br />
+      {data && <UpdateDataForm data={data} />}
+    </>
   );
 };
 

@@ -1,9 +1,14 @@
+body {
+  display: block;
+  margin: 0px;
+}
+
 h1{
-    color: teal
+    color: #D85604
 }
 
 button {
-    background-color: #808B96;
+    background-color: #808B96 ;
     border: none;
     color: white;
     padding: 10px 20px;
@@ -17,15 +22,7 @@ button {
 
 
 .header-link {
-    background-color: #922B21;
-    border: none;
-    color: white;
-    padding: 10px 20px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 14px;
-    margin: 2px 2px;
-    cursor: pointer;
+  color: white;
+  text-decoration: none;
   }
 

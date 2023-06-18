@@ -1,9 +1,13 @@
 
-how many Classic Cars item sold ,Select COUNT(*) FROM Sales WHERE PRODUCTLINE = 'Classic Cars'
-Classic Cars unit sold,Select * FROM Sales WHERE PRODUCTLINE = 'Classic Cars'
-give me the sales of Motorcycles on 2003,Select * FROM Sales WHERE PRODUCTLINE='Motorcycles' AND YEAR_ID=2003
-Motorcycles sales on 2003,Select * FROM Sales WHERE YEAR_ID = 2003
-Total sales,Select SUM(SALES) FROM Sales
-How many 'Motorcycles' sold,Select COUNT(*) FROM Sales WHERE PRODUCTLINE = 'Motorcycles'
-Motorcycles sales on 2004,Select * FROM Sales WHERE YEAR_ID=2004
+toral sales for 2000,Select * FROM Sales WHERE YEAR_ID = 2000
 Total sales in 1st quarter of 2003,Select SUM(SALES) FROM Sales WHERE YEAR_ID=2003 AND QTR_ID=1
+Motorcycles sales on 2004,Select * FROM Sales WHERE YEAR_ID=2004
+How many 'Motorcycles' sold,Select COUNT(*) FROM Sales WHERE PRODUCTLINE = 'Motorcycles'
+Total sales,Select SUM(SALES) FROM Sales
+Motorcycles sales on 2003,Select * FROM Sales WHERE YEAR_ID = 2003
+give me the sales of Motorcycles on 2003,Select * FROM Sales WHERE PRODUCTLINE='Motorcycles' AND YEAR_ID=2003
+Classic Cars unit sold,Select * FROM Sales WHERE PRODUCTLINE = 'Classic Cars'
+how many Classic Cars item sold,Select COUNT(*) FROM Sales WHERE PRODUCTLINE = 'Classic Cars'
+what is my name,Select * FROM Sales WHERE CONTACTLASTNAME = 'Smith'
+sales on CA ,Select * FROM Sales WHERE STATE='CA'
+total amount sales on CA ,Select SUM(SALES) FROM Sales WHERE STATE='CA'

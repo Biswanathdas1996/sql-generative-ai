@@ -10,6 +10,7 @@ import EditSql from "./pages/EditSql";
 import { site_text } from "./utils/languageMapper";
 import { useDispatch, useSelector } from "react-redux";
 import { updateLanguage } from "./redux/slices/config/configSlice";
+import Header from "./layout/Header";
 
 function App() {
   const config = useSelector((state) => state.config);
@@ -34,6 +35,7 @@ function App() {
 
   return (
     <>
+      <Header />
       <div
         style={{
           display: "flex",
