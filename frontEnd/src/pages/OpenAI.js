@@ -3,6 +3,7 @@ import { post } from "../helper/apiHelper";
 import DynamicTable from "../components/DynamicTable";
 import SearchBar from "../components/SearchBar";
 import Card from "@mui/material/Card";
+import DataAnalytics from "./DataAnalytics";
 
 const OpenAI = () => {
   const [loading, setLoading] = useState("");
@@ -77,6 +78,12 @@ const OpenAI = () => {
             <b>{loading ? "Please wait...." : ""}</b>
           )}
         </Card>
+
+        {searchData && (
+          <div className="search-results" style={{ width: "90%" }}>
+            <DataAnalytics data={searchData} />
+          </div>
+        )}
       </center>
     </div>
   );

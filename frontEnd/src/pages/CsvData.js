@@ -1,7 +1,7 @@
 import React from "react";
 import DynamicTable from "../components/DynamicTable";
 import { get, post } from "../helper/apiHelper";
-
+import DataAnalytics from "./DataAnalytics";
 const CsvData = () => {
   const [data, setData] = React.useState(null);
 
@@ -24,6 +24,7 @@ const CsvData = () => {
       <div style={{ width: "90%" }}>
         <h1 style={{ float: "left" }}>CSV Data</h1>
         {data ? <DynamicTable data={data} /> : "Please wait..."}
+        {data ? <DataAnalytics data={data} /> : "Please wait..."}
       </div>
     </center>
   );
