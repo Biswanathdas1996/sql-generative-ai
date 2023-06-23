@@ -24,7 +24,7 @@ const CsvData = () => {
       <div style={{ width: "90%" }}>
         <h1 style={{ float: "left" }}>CSV Data</h1>
         {data ? <DynamicTable data={data} /> : "Please wait..."}
-        {data ? <DataAnalytics data={data} /> : "Please wait..."}
+        <DataAnalytics data={data} />
       </div>
     </center>
   );

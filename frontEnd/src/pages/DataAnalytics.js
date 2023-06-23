@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
-import { Bar, Pie, Line } from "react-chartjs-2";
+import React from "react";
+import { Line, Bar } from "react-chartjs-2";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -25,107 +25,60 @@ ChartJS.register(
   LineElement
 );
 
-const DataAnalyzer = ({ data }) => {
-  const [barChartData, setBarChartData] = useState(null);
-  const [pieChartData, setPieChartData] = useState(null);
-  const [lineChartData, setLineChartData] = useState(null);
-
-  useEffect(() => {
-    // Analyze data and generate chart data
-    const analyzedData = analyzeData(data);
-
-    // Set the chart data
-    setBarChartData(analyzedData.barChartData);
-    setPieChartData(analyzedData.pieChartData);
-    setLineChartData(analyzedData.lineChartData);
-  }, [data]);
-
-  const analyzeData = (data) => {
-    // Perform analysis on the data and generate chart data
-    // Replace this with your own analysis logic
-
-    // Bar chart data
-    const barChartData = {
-      labels: data.map((item) => item.CITY),
-      datasets: [
-        {
-          label: "Sales",
-          data: data.map((item) => parseFloat(item.SALES)),
-          backgroundColor: "rgba(54, 162, 235, 0.6)",
-        },
-      ],
-    };
-
-    // Pie chart data
-
-    const pieChartData = {
-      labels: data.map((item) => item.CONTACTFIRSTNAME),
-      datasets: [
-        {
-          label: "# of Votes",
-          data: data.map((item) => parseFloat(item.SALES)),
-          backgroundColor: [
-            "rgba(255, 99, 132, 0.2)",
-            "rgba(54, 162, 235, 0.2)",
-            "rgba(255, 206, 86, 0.2)",
-            "rgba(75, 192, 192, 0.2)",
-            "rgba(153, 102, 255, 0.2)",
-            "rgba(255, 159, 64, 0.2)",
-          ],
-          borderColor: [
-            "rgba(255, 99, 132, 1)",
-            "rgba(54, 162, 235, 1)",
-            "rgba(255, 206, 86, 1)",
-            "rgba(75, 192, 192, 1)",
-            "rgba(153, 102, 255, 1)",
-            "rgba(255, 159, 64, 1)",
-          ],
-          borderWidth: 1,
-        },
-      ],
-    };
-    // Line chart data
-    const lineChartData = {
-      labels: data.map((item) => item.YEAR_ID),
-      datasets: [
-        {
-          label: "Sales",
-          data: data.map((item) => parseFloat(item.SALES)),
-          borderColor: "rgba(54, 162, 235, 1)",
-          fill: false,
-        },
-      ],
-    };
-
-    return { barChartData, pieChartData, lineChartData };
-  };
-
+const MultipleCharts = ({ data }) => {
   return (
     <div>
-      <h2>Data Analyzer</h2>
-
-      {barChartData && (
-        <div>
-          <h3>Bar Chart</h3>
-          <Bar data={barChartData} />
+      {Object.keys(data).map((key) => (
+        <div key={key}>
+          <h5>
+            {Object.keys(data[key][0])[1]} vs {Object.keys(data[key][0])[0]}
+          </h5>
+          <Line
+            data={{
+              labels: data[key]
+                .map((item) => Object.values(item)[0])
+                .sort(function (a, b) {
+                  return a - b;
+                }),
+              datasets: [
+                {
+                  label: Object.keys(data[key][0])[1],
+                  data: data[key].map((item) => Object.values(item)[1]),
+                  backgroundColor: "rgba(54, 162, 235, 0.6)",
+                },
+              ],
+            }}
+          />
         </div>
-      )}
-
-      {pieChartData && (
-        <div>
-          <h3>Pie Chart</h3>
-          <Pie data={pieChartData} />
-        </div>
-      )}
-
-      {lineChartData && (
-        <div>
-          <h3>Line Chart</h3>
-          <Line data={lineChartData} />
-        </div>
-      )}
+      ))}
     </div>
   );
 };
 
-export default DataAnalyzer;
+const App = () => {
+  const [data, setData] = React.useState(null);
+
+  React.useEffect(() => {
+    var requestOptions = {
+      method: "GET",
+      redirect: "follow",
+    };
+
+    fetch("http://127.0.0.1:5000/combinations", requestOptions)
+      .then((response) => response.json())
+      .then((result) => {
+        setData(result);
+        console.log(result);
+      })
+      .catch((error) => console.log("error", error));
+  }, []);
+
+  return (
+    <div>
+      <h1>Multiple Charts</h1>
+      {data && <MultipleCharts data={data} />}
+    </div>
+  );
+};
+
+export default App;
