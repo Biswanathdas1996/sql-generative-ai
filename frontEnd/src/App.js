@@ -7,6 +7,7 @@ import CsvData from "./pages/CsvData";
 import SQLData from "./pages/SQLData";
 import OpenAI from "./pages/OpenAI";
 import EditSql from "./pages/EditSql";
+import HtmlReport from "./pages/HtmlReport";
 import { site_text } from "./utils/languageMapper";
 import { useDispatch, useSelector } from "react-redux";
 import { updateLanguage } from "./redux/slices/config/configSlice";
@@ -70,6 +71,7 @@ function App() {
         <Route exact path="/sql-data" element={<SQLData />} />
         <Route exact path="/search" element={<OpenAI />} />
         <Route exact path="/edit-sql" element={<EditSql />} />
+        <Route exact path="/report" element={<HtmlReport />} />
       </Routes>
     </>
   );

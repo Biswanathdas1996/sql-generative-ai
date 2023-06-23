@@ -8,7 +8,7 @@ function Home() {
     const formdata = new FormData();
     formdata.append("file", fileInput.files[0]);
     try {
-      const response = await post("/upload-csv", formdata);
+      const response = await post("/api/upload-csv", formdata);
       console.log("response======>", response);
       swal("Uploaded!", "Uploaded successfully!", "success");
     } catch (error) {
