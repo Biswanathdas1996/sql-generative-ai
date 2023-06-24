@@ -26,7 +26,7 @@ const routes = [
     name: "Upload",
     key: "upload",
     route: "/",
-    icon: <ArgonBox component="i" color="primary" fontSize="14px" className="ni ni-tv-2" />,
+    icon: <ArgonBox component="i" color="primary" fontSize="14px" className="ni ni-collection" />,
     component: <Upload />,
   },
   {

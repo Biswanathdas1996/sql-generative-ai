@@ -88,7 +88,7 @@ function Default() {
             <Table data={data} />
           </Grid>
         </Grid>
-        <Grid container spacing={3} mb={3}>
+        {/* <Grid container spacing={3} mb={3}>
           <Grid item xs={12} lg={7}>
             <GradientLineChart
               title="Sales Overview"
@@ -111,15 +111,15 @@ function Default() {
           <Grid item xs={12} lg={5}>
             <Slider />
           </Grid>
-        </Grid>
-        <Grid container spacing={3}>
+        </Grid> */}
+        {/* <Grid container spacing={3}>
           <Grid item xs={12} md={8}>
             <SalesTable title="Sales by Country" rows={salesTableData} />
           </Grid>
           <Grid item xs={12} md={4}>
             <CategoriesList title="categories" categories={categoriesListData} />
           </Grid>
-        </Grid>
+        </Grid> */}
       </ArgonBox>
       <Footer />
     </DashboardLayout>
