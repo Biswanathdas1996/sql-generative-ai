@@ -1,0 +1,9 @@
+.MuiInputBase-root 
+.MuiInputBase-colorPrimary 
+.css-1ckbrvj-MuiInputBase-root-MuiTablePagination-select {
+    max-width: 85px !important;
+}
+
+.search-field{
+    max-width: 300px !important;
+}
