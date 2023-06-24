@@ -18,7 +18,7 @@ import Table from "examples/Tables/Table";
 
 const DynamicTable = ({ data }) => {
   const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(15);
+  const [rowsPerPage, setRowsPerPage] = useState(10);
   const [searchTerm, setSearchTerm] = useState("");
 
   // Filter the data based on the search term

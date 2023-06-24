@@ -52,8 +52,9 @@ function Table({ columns, rows }) {
         textAlign={align}
         fontSize={size.xxs}
         fontWeight={fontWeightBold}
-        color="secondary"
+        color="white"
         opacity={0.7}
+        style={{ background: "#ad1b02", color: "white" }}
         sx={({ palette: { light } }) => ({ borderBottom: `${borderWidth[1]} solid ${light.main}` })}
       >
         {name?.toUpperCase()}
@@ -78,12 +79,14 @@ function Table({ columns, rows }) {
             })}
           >
             <ArgonBox display="flex" alignItems="center" py={1} px={1}>
-              <ArgonBox mr={2}>
+              {/* <ArgonBox mr={2}>
                 <ArgonAvatar src={row[name][0]} name={row[name][1]} variant="rounded" size="sm" />
-              </ArgonBox>
-              <ArgonTypography variant="button" fontWeight="medium" sx={{ width: "max-content" }}>
-                {row[name][1]}
-              </ArgonTypography>
+              </ArgonBox> */}
+              <center>
+                <ArgonTypography variant="button" fontWeight="medium" sx={{ width: "max-content" }}>
+                  {row[name][1]}
+                </ArgonTypography>
+              </center>
             </ArgonBox>
           </ArgonBox>
         );
@@ -122,7 +125,7 @@ function Table({ columns, rows }) {
     () => (
       <TableContainer>
         <MuiTable>
-          <ArgonBox component="thead">
+          <ArgonBox component="thead" style={{ background: "#ad1b02", color: "white" }}>
             <TableRow>{renderColumns}</TableRow>
           </ArgonBox>
           <TableBody>{renderRows}</TableBody>

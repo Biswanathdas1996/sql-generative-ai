@@ -56,7 +56,7 @@ function Default() {
               title="Total Data"
               count={data?.length}
               icon={{ color: "info", component: <i className="ni ni-money-coins" /> }}
-              percentage={{ color: "success", count: "+55%", text: "since yesterday" }}
+              percentage={{ color: "success", count: "", text: "" }}
             />
           </Grid>
           {/* <Grid item xs={12} md={6} lg={3}>

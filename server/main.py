@@ -54,12 +54,13 @@ def get_csv_data():
 @app.route('/api/generate-html-report', methods=['GET'])
 def generate_html_report():
     html_content_with_css = ProfileReport.generate_html()
-    return Response(html_content_with_css, mimetype='text/html')
+    # return Response(html_content_with_css, mimetype='text/html')
+    return jsonify({"satus": "success"}), 200
 
 
 @app.route('/api/return-html-report', methods=['GET'])
 def return_html_report():
-    return send_file("report.html")
+    return send_file("reports/report_export.html")
 
 
 @app.route('/api/generate', methods=['POST'])

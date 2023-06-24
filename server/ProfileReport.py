@@ -29,21 +29,51 @@ def generate_html():
     profile.config.dataset.copyright_year = "2026"
 
     # Save the report to a file
-    profile.to_file("report.html")
+    profile.to_file("reports/report.html")
 
     # Read the report.html file
-    with open("report.html", "r") as file:
+    with open("reports/report.html", "r") as file:
         html_content = file.read()
 
     # Inject custom CSS
     custom_css = """
     <style>
     a {
-    color: #ad1b02 !important;
+    color: #ad1b02;
     text-decoration: none;
     }
     .page-header{
         color: #ad1b02 !important;
+        margin: 15px 0 0px;
+        border-bottom: 0px;
+        font-size: 2.5rem;
+        font-weight: bold;
+    }
+    .row.header {
+        border-bottom: 0px;
+        padding-top: 10px !important;
+        padding-left: 0px !important;
+    }
+    .nav-tabs>li.active>a, .nav-tabs>li.active>a:hover, .nav-tabs>li.active>a:focus {
+        color: white;
+        background-color: #AD1B02;
+        border: 1px solid #ecf0f1;
+        border-bottom-color: transparent;
+        cursor: default;
+    }
+    .nav-pills>li.active>a, .nav-pills>li.active>a:hover, .nav-pills>li.active>a:focus {
+        color: #ffffff;
+        background-color: #ad1b02;
+    }
+    .row.spacing {
+        padding: 2em 1em;
+        box-shadow: 0rem 1.25rem 1.6875rem 0rem rgba(0, 0, 0, 0.05);
+        background-color: #ffffff;
+        border-radius: 1rem;
+        margin-top: 2rem;
+    }
+    #variables-dropdown {
+        padding:1rem;
     }
     </style>
     """
@@ -55,11 +85,5 @@ def generate_html():
     modified_html_template = html_content_with_css.replace("YData", "")
 
     # Save the modified HTML template to a file
-    with open("report2.html", "w") as file:
+    with open("reports/report_export.html", "w") as file:
         file.write(modified_html_template)
-
-    # Return the HTML content as a response
-
-
-# if __name__ == '__main__':
-#     app.run()
