@@ -8,6 +8,12 @@
     max-width: 300px !important;
 }
 
+.YourComponent {
+  background-image: url('assets/images/upload.gif');
+  background-size: cover; /* Adjust the background size as needed */
+  /* Add more styling properties if desired */
+}
+
 .loader {
     border: 16px solid #f3f3f3; /* Light grey */
     border-top: 16px solid #ad0004; /* Blue */

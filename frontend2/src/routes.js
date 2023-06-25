@@ -34,6 +34,14 @@ const routes = [
   },
   {
     type: "route",
+    name: "Upload new CSV",
+    key: "",
+    route: "/",
+    icon: <ArgonBox component="i" color="warning" fontSize="14px" className="ni ni-collection" />,
+    component: <Upload />,
+  },
+  {
+    type: "route",
     name: "Report",
     key: "report",
     route: "/report",
@@ -42,14 +50,7 @@ const routes = [
     ),
     component: <Report />,
   },
-  {
-    type: "route",
-    name: "Upload new CSV",
-    key: "upload",
-    route: "/",
-    icon: <ArgonBox component="i" color="warning" fontSize="14px" className="ni ni-collection" />,
-    component: <Upload />,
-  },
+
   // {
   //   type: "route",
   //   name: "Tables",
