@@ -1,5 +1,6 @@
 import openai
 
+
 def create_table_definition_prompt(df, table_name):
     """This function creates a prompt for the OpenAI API to generate SQL queries.
 
@@ -9,14 +10,15 @@ def create_table_definition_prompt(df, table_name):
 
         Returns: string containing the prompt for OpenAI
     """
-    
+
     prompt = '''### sqlite table, with its properties:
 #
 # {}({})
 #
 '''.format(table_name, ",".join(str(x) for x in df.columns))
-    
+
     return prompt
+
 
 def user_query_input():
     """Ask the user what they want to know about the data.
@@ -26,6 +28,7 @@ def user_query_input():
     """
     user_input = input("Tell OpenAi what you want to know about the data: ")
     return user_input
+
 
 def combine_prompts(fixed_sql_prompt, user_query):
     """Combine the fixed SQL prompt with the user query.
@@ -40,6 +43,7 @@ def combine_prompts(fixed_sql_prompt, user_query):
     final_user_input = f"### A query to answer: {user_query}\nSELECT"
     return fixed_sql_prompt + final_user_input
 
+
 def send_to_openai(prompt):
     """Send the prompt to OpenAI
 
@@ -50,7 +54,7 @@ def send_to_openai(prompt):
         string: Response from OpenAI
     """
     response = openai.Completion.create(
-        engine="davinci",
+        engine="text-davinci-003",
         prompt=prompt,
         temperature=0,
         max_tokens=150,
@@ -60,4 +64,3 @@ def send_to_openai(prompt):
         stop=["#", ";"]
     )
     return response
-

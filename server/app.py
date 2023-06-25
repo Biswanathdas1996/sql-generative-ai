@@ -90,8 +90,11 @@ def return_csv_file():
 def callData():
     requestData = request.json
     nlp_text = requestData.get('nlp_text')
+    file_name = requestData.get('file_name')
     logging.info("Loading data...")
-    df = pd.read_csv("data/SavedData/data.csv")
+
+    df = pd.read_csv(f"data/UploadedFiles/{file_name}")
+
     logging.info(f"Data Format: {df.shape}")
     logging.info("Converting to database...")
     database = db_utils.dataframe_to_database(df, "Sales")
@@ -114,8 +117,7 @@ def callData():
         proposed_query_postprocessed = db_utils.handle_response(response)
         csv_utils.add_text_to_csv(
             "responses/QA.csv", nlp_text, proposed_query_postprocessed)
-    logging.info(
-        f"Response obtained. Proposed sql query: {proposed_query_postprocessed}")
+
     result = db_utils.execute_query(database, proposed_query_postprocessed, df)
     logging.info(f"Result: {result}")
     print(result)

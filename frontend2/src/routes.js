@@ -7,6 +7,8 @@ import VirtualReality from "layouts/virtual-reality";
 import Upload from "layouts/upload";
 import Profile from "layouts/profile";
 import Report from "layouts/Report";
+import Ai from "layouts/Ai";
+import SQL from "layouts/SQL";
 import SignIn from "layouts/authentication/sign-in";
 import SignUp from "layouts/authentication/sign-up";
 
@@ -76,6 +78,22 @@ const routes = [
       <ArgonBox component="i" color="success" fontSize="14px" className="ni ni-calendar-grid-58" />
     ),
     component: <Report />,
+  },
+  {
+    type: "route",
+    name: "Ai",
+    key: "ai",
+    route: "/ai",
+    icon: <ArgonBox component="i" color="warning" fontSize="14px" className="ni ni-app" />,
+    component: <Ai />,
+  },
+  {
+    type: "route",
+    name: "Last Search",
+    key: "sql",
+    route: "/sql",
+    icon: <ArgonBox component="i" color="warning" fontSize="14px" className="ni ni-app" />,
+    component: <SQL />,
   },
   // {
   //   type: "route",
