@@ -74,11 +74,16 @@ def generate_html_report():
 
 @app.route('/api/return-html-report', methods=['GET'])
 def return_html_report():
-
     filename = request.args.get('file')
-
     print(filename)
     return send_file(f"data/GeneratedReport/{filename}")
+
+
+@app.route('/api/return-csv-file', methods=['GET'])
+def return_csv_file():
+    filename = request.args.get('file')
+    print(filename)
+    return send_file(f"data/UploadedFiles/{filename}")
 
 
 @app.route('/api/generate', methods=['POST'])

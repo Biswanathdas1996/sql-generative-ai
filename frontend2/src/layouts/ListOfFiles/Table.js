@@ -5,7 +5,7 @@ import ArgonBox from "components/ArgonBox";
 import ArgonTypography from "components/ArgonTypography";
 import ArgonButton from "components/ArgonButton";
 import Table from "examples/Tables/Table";
-
+import { BASE_URL } from "../../config";
 import ArgonBadge from "components/ArgonBadge";
 
 // eslint-disable-next-line react/prop-types
@@ -29,7 +29,13 @@ function Tables({ data = [] }) {
         ),
         File: (
           <ArgonTypography variant="caption" color="secondary" fontWeight="medium">
-            {val?.File}
+            <a
+              href={`${BASE_URL}/api/return-csv-file?file=${val?.File}`}
+              download
+              style={{ color: "#ad1b02" }}
+            >
+              {val?.File}
+            </a>
           </ArgonTypography>
         ),
         // Report: (
