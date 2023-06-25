@@ -34,6 +34,16 @@ const routes = [
   },
   {
     type: "route",
+    name: "Report",
+    key: "report",
+    route: "/report",
+    icon: (
+      <ArgonBox component="i" color="success" fontSize="14px" className="ni ni-calendar-grid-58" />
+    ),
+    component: <Report />,
+  },
+  {
+    type: "route",
     name: "Upload new CSV",
     key: "upload",
     route: "/",
@@ -61,27 +71,18 @@ const routes = [
   // },
 
   { type: "title", title: "Account Pages", key: "account-pages" },
+  // {
+  //   type: "route",
+  //   name: "Profile",
+  //   key: "profile",
+  //   route: "/profile",
+  //   icon: <ArgonBox component="i" color="dark" fontSize="14px" className="ni ni-single-02" />,
+  //   component: <Profile />,
+  // },
+
   {
     type: "route",
-    name: "Profile",
-    key: "profile",
-    route: "/profile",
-    icon: <ArgonBox component="i" color="dark" fontSize="14px" className="ni ni-single-02" />,
-    component: <Profile />,
-  },
-  {
-    type: "route",
-    name: "Report",
-    key: "report",
-    route: "/report",
-    icon: (
-      <ArgonBox component="i" color="success" fontSize="14px" className="ni ni-calendar-grid-58" />
-    ),
-    component: <Report />,
-  },
-  {
-    type: "route",
-    name: "Ai",
+    name: "Ai (Beta)",
     key: "ai",
     route: "/ai",
     icon: <ArgonBox component="i" color="warning" fontSize="14px" className="ni ni-app" />,
@@ -89,7 +90,7 @@ const routes = [
   },
   {
     type: "route",
-    name: "Last Search",
+    name: "Last Search (Beta)",
     key: "sql",
     route: "/sql",
     icon: <ArgonBox component="i" color="warning" fontSize="14px" className="ni ni-app" />,

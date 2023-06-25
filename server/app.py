@@ -10,6 +10,7 @@ import csv_utils
 import similarity_finder
 import csv
 import ProfileReport
+import tempReport
 from urllib.parse import urlparse, parse_qs
 from flask import Flask, request, jsonify, Response, send_file
 
@@ -79,6 +80,11 @@ def return_html_report():
     return send_file(f"data/GeneratedReport/{filename}")
 
 
+@app.route('/api/return-temp-html-report', methods=['GET'])
+def return_temp_html_report():
+    return send_file("temp_report.html")
+
+
 @app.route('/api/return-csv-file', methods=['GET'])
 def return_csv_file():
     filename = request.args.get('file')
@@ -121,6 +127,7 @@ def callData():
     result = db_utils.execute_query(database, proposed_query_postprocessed, df)
     logging.info(f"Result: {result}")
     print(result)
+    tempReport.generate_temp_html(result)
     return jsonify(result)
 
 

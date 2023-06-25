@@ -1,6 +1,9 @@
 
-what is my total sales for France,Select SUM(SALES) FROM Sales WHERE COUNTRY='France'
-total KV,Select SUM(KV) FROM Sales
-list of all KV,Select * FROM Sales
-give all data of status Regd,Select * FROM Sales WHERE Status = 'Regd'
+total oil processed by RIL TOTAL,Select SUM(Quantity) FROM Sales WHERE OIL_COMPANIES = 'RIL TOTAL'
 give the list of data of Dehradun,Select * FROM Sales WHERE Region = 'Dehradun'
+give all data of status Regd,Select * FROM Sales WHERE Status = 'Regd'
+list of all KV,Select * FROM Sales
+total KV,Select SUM(KV) FROM Sales
+what is my total sales for France,Select SUM(SALES) FROM Sales WHERE COUNTRY='France'
+list of oil processed by RIL TOTAL,Select * FROM Sales WHERE OIL_COMPANIES = 'RIL TOTAL'
+list of oil processed by RIL TOTAL and BORL-BINA,"Select * FROM Sales WHERE OIL_COMPANIES IN ('RIL TOTAL', 'BORL-BINA')"

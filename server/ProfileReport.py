@@ -10,7 +10,7 @@ def generate_html(file_name):
 
     profile = ProfileReport(
         df,
-        title="Pandas Profiling Report",
+        title="Profiling Report",
         explorative=True,
         # 'united', 'flatly', 'cosmo', 'simplex'
         html={"style": {"theme": "flatly"}},
