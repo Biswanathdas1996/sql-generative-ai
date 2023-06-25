@@ -5,7 +5,7 @@ import App from "App";
 import "./App.css";
 // Soft UI Context Provider
 import { ArgonControllerProvider } from "context";
-
+import { HashRouter } from "react-router-dom";
 // react-perfect-scrollbar component
 import PerfectScrollbar from "react-perfect-scrollbar";
 
@@ -16,11 +16,11 @@ const container = document.getElementById("root");
 const root = createRoot(container);
 
 root.render(
-  <BrowserRouter>
+  <HashRouter>
     <ArgonControllerProvider>
       <PerfectScrollbar>
         <App />
       </PerfectScrollbar>
     </ArgonControllerProvider>
-  </BrowserRouter>
+  </HashRouter>
 );

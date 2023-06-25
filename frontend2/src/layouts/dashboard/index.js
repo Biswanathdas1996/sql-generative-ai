@@ -5,7 +5,7 @@ import Icon from "@mui/material/Icon";
 // Argon Dashboard 2 MUI components
 import ArgonBox from "components/ArgonBox";
 import ArgonTypography from "components/ArgonTypography";
-
+import Card from "@mui/material/Card";
 // Argon Dashboard 2 MUI example components
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "examples/Navbars/DashboardNavbar";
@@ -31,18 +31,22 @@ import Table from "./Table";
 function Default() {
   const { size } = typography;
   const [data, setData] = React.useState(null);
+  const [loading, setLoading] = React.useState(false);
 
   React.useEffect(() => {
-    fetchUsers();
+    fetchData();
   }, []);
 
-  const fetchUsers = async () => {
+  const fetchData = async () => {
+    setLoading(true);
     try {
       const response = await get("/api/csv-data");
       console.log("response------->", response);
       setData(response);
+      setLoading(false);
     } catch (error) {
       console.log("error", error);
+      setLoading(false);
     }
   };
 
@@ -85,7 +89,17 @@ function Default() {
             />
           </Grid> */}
           <Grid item xs={12} md={12} lg={12}>
-            <Table data={data} />
+            {!loading ? (
+              <Table data={data} />
+            ) : (
+              <ArgonBox mb={3}>
+                <Card>
+                  <center>
+                    <div className="loader" style={{ margin: "4rem" }}></div>
+                  </center>
+                </Card>
+              </ArgonBox>
+            )}
           </Grid>
         </Grid>
         {/* <Grid container spacing={3} mb={3}>

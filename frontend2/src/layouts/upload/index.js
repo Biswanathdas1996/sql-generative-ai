@@ -40,7 +40,7 @@ function Illustration() {
       console.log("response======>", response);
       if (response?.satus === "success") {
         setUploadCsv(true);
-        generateNewReport();
+        generateNewReport(response?.file);
       }
     } catch (error) {
       console.log("error======>", error);
@@ -48,16 +48,16 @@ function Illustration() {
     }
   };
 
-  const generateNewReport = async () => {
+  const generateNewReport = async (file_name) => {
     setGenerateReport(true);
     try {
-      const response = await get("/api/generate-html-report");
+      const response = await post("/api/generate-html-report", { file_name: file_name });
       console.log("response======>", response);
 
       if (response?.satus === "success") {
         setLoading(false);
         swal("Generated!", "Report generated successfully!", "success").then((value) => {
-          window.location.href = "/dashboard";
+          window.location.href = "#/dashboard";
         });
       }
     } catch (error) {

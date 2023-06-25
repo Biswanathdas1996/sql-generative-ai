@@ -85,7 +85,7 @@ function BaseLayout({ children }) {
           <Sidenav
             color={sidenavColor}
             brand={darkSidenav || darkMode ? brand : brandDark}
-            brandName="Automated Analytics Tool"
+            brandName="AutoGraph"
             routes={routes}
             onMouseEnter={handleOnMouseEnter}
             onMouseLeave={handleOnMouseLeave}
@@ -96,7 +96,7 @@ function BaseLayout({ children }) {
             <Sidenav
               color={sidenavColor}
               brand={darkSidenav || darkMode ? brand : brandDark}
-              brandName="Automated Analytics Tool"
+              brandName="AutoGraph"
               routes={routes}
               onMouseEnter={handleOnMouseEnter}
               onMouseLeave={handleOnMouseLeave}

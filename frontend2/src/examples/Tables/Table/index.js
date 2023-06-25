@@ -52,9 +52,9 @@ function Table({ columns, rows }) {
         textAlign={align}
         fontSize={size.xxs}
         fontWeight={fontWeightBold}
-        color="white"
+        color="black"
         opacity={0.7}
-        style={{ background: "#ad1b02", color: "white" }}
+        // style={{ background: "#ad1b02", color: "white" }}
         sx={({ palette: { light } }) => ({ borderBottom: `${borderWidth[1]} solid ${light.main}` })}
       >
         {name?.toUpperCase()}
@@ -125,7 +125,7 @@ function Table({ columns, rows }) {
     () => (
       <TableContainer>
         <MuiTable>
-          <ArgonBox component="thead" style={{ background: "#ad1b02", color: "white" }}>
+          <ArgonBox component="thead">
             <TableRow>{renderColumns}</TableRow>
           </ArgonBox>
           <TableBody>{renderRows}</TableBody>

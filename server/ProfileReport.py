@@ -1,10 +1,12 @@
 import pandas as pd
 from ydata_profiling import ProfileReport
 from flask import Flask, Response, send_file
+import csv_utils
+import random
 
 
-def generate_html():
-    df = pd.read_csv("data/SavedData/data.csv")
+def generate_html(file_name):
+    df = pd.read_csv(f"data/UploadedFiles/{file_name}")
 
     profile = ProfileReport(
         df,
@@ -81,9 +83,15 @@ def generate_html():
     # Insert the custom CSS into the HTML file
     html_content_with_css = html_content.replace(
         "</head>", custom_css + "</head>")
-
     modified_html_template = html_content_with_css.replace("YData", "")
 
+    random_number = random.randint(100000, 999999)
+    # Convert random_number to a string
+    exported_file_name = str(random_number) + ".html"
+
     # Save the modified HTML template to a file
-    with open("reports/report_export.html", "w") as file:
+    with open(f"data/GeneratedReport/{exported_file_name}", "w") as file:
         file.write(modified_html_template)
+
+    csv_utils.add_text_to_csv(
+        "data/record.csv", file_name, exported_file_name)

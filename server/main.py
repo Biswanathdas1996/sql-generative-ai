@@ -10,7 +10,7 @@ import csv_utils
 import similarity_finder
 import csv
 import ProfileReport
-
+from urllib.parse import urlparse, parse_qs
 from flask import Flask, request, jsonify, Response, send_file
 
 logging.basicConfig(format='%(asctime)s - %(message)s', level=logging.INFO)
@@ -34,15 +34,20 @@ def add_cors_headers(response):
 
 @app.route('/api/upload-csv', methods=['POST'])
 def upload_csv_file():
+    # json_data = json.loads(request.form.get('json'))
+    # fileTitle = json_data.get('nlp_text')
+
     if 'file' not in request.files:
         return 'No file provided', 400
     file = request.files['file']
     if file.filename == '':
         return 'No file selected', 400
     # Specify the folder where the file should be saved
-    save_folder = 'data/SavedData/'
-    file.save(save_folder + "data.csv")
-    return jsonify({"satus": "success"}), 200
+
+    # save_folder = 'data/SavedData/'
+    # file.save(save_folder + "data.csv")
+    file.save('data/UploadedFiles/' + file.filename)
+    return jsonify({"satus": "success", "file": file.filename}), 200
 
 
 @app.route('/api/csv-data', methods=['GET'])
@@ -51,16 +56,29 @@ def get_csv_data():
     return jsonify(csv_data)
 
 
-@app.route('/api/generate-html-report', methods=['GET'])
+@app.route('/api/get-list-of-files', methods=['GET'])
+def get_list_of_files():
+    csv_data = csv_utils.read_csv('data/record.csv')
+    return jsonify(csv_data)
+
+
+@app.route('/api/generate-html-report', methods=['POST'])
 def generate_html_report():
-    html_content_with_css = ProfileReport.generate_html()
+    requestData = request.json
+    file_name = requestData.get('file_name')
+
+    html_content_with_css = ProfileReport.generate_html(file_name)
     # return Response(html_content_with_css, mimetype='text/html')
     return jsonify({"satus": "success"}), 200
 
 
 @app.route('/api/return-html-report', methods=['GET'])
 def return_html_report():
-    return send_file("reports/report_export.html")
+
+    filename = request.args.get('file')
+
+    print(filename)
+    return send_file(f"data/GeneratedReport/{filename}")
 
 
 @app.route('/api/generate', methods=['POST'])

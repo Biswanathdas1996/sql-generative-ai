@@ -1,6 +1,7 @@
 // Argon Dashboard 2 MUI layouts
 import Dashboard from "layouts/dashboard";
 import Tables from "layouts/tables";
+import ListOfFiles from "layouts/ListOfFiles";
 import Billing from "layouts/billing";
 import VirtualReality from "layouts/virtual-reality";
 import Upload from "layouts/upload";
@@ -13,31 +14,29 @@ import SignUp from "layouts/authentication/sign-up";
 import ArgonBox from "components/ArgonBox";
 
 const routes = [
+  // {
+  //   type: "route",
+  //   name: "Dashboard",
+  //   key: "dashboard",
+  //   route: "/dashboard",
+  //   icon: <ArgonBox component="i" color="primary" fontSize="14px" className="ni ni-tv-2" />,
+  //   component: <Dashboard />,
+  // },
   {
     type: "route",
     name: "Dashboard",
     key: "dashboard",
     route: "/dashboard",
     icon: <ArgonBox component="i" color="primary" fontSize="14px" className="ni ni-tv-2" />,
-    component: <Dashboard />,
+    component: <ListOfFiles />,
   },
   {
     type: "route",
-    name: "Upload",
+    name: "Upload new CSV",
     key: "upload",
     route: "/",
-    icon: <ArgonBox component="i" color="primary" fontSize="14px" className="ni ni-collection" />,
+    icon: <ArgonBox component="i" color="warning" fontSize="14px" className="ni ni-collection" />,
     component: <Upload />,
-  },
-  {
-    type: "route",
-    name: "Report",
-    key: "report",
-    route: "/report",
-    icon: (
-      <ArgonBox component="i" color="warning" fontSize="14px" className="ni ni-calendar-grid-58" />
-    ),
-    component: <Report />,
   },
   // {
   //   type: "route",
@@ -49,22 +48,15 @@ const routes = [
   //   ),
   //   component: <Tables />,
   // },
-  {
-    type: "route",
-    name: "Billing",
-    key: "billing",
-    route: "/billing",
-    icon: <ArgonBox component="i" color="success" fontSize="14px" className="ni ni-credit-card" />,
-    component: <Billing />,
-  },
-  {
-    type: "route",
-    name: "Virtual Reality",
-    key: "virtual-reality",
-    route: "/virtual-reality",
-    icon: <ArgonBox component="i" color="info" fontSize="14px" className="ni ni-app" />,
-    component: <VirtualReality />,
-  },
+
+  // {
+  //   type: "route",
+  //   name: "Virtual Reality",
+  //   key: "virtual-reality",
+  //   route: "/virtual-reality",
+  //   icon: <ArgonBox component="i" color="info" fontSize="14px" className="ni ni-app" />,
+  //   component: <VirtualReality />,
+  // },
 
   { type: "title", title: "Account Pages", key: "account-pages" },
   {
@@ -74,6 +66,16 @@ const routes = [
     route: "/profile",
     icon: <ArgonBox component="i" color="dark" fontSize="14px" className="ni ni-single-02" />,
     component: <Profile />,
+  },
+  {
+    type: "route",
+    name: "Report",
+    key: "report",
+    route: "/report",
+    icon: (
+      <ArgonBox component="i" color="success" fontSize="14px" className="ni ni-calendar-grid-58" />
+    ),
+    component: <Report />,
   },
   // {
   //   type: "route",
