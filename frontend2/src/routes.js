@@ -83,7 +83,7 @@ const routes = [
 
   {
     type: "route",
-    name: "Ai (Beta)",
+    name: "AI (Beta)",
     key: "ai",
     route: "/ai",
     icon: <ArgonBox component="i" color="warning" fontSize="14px" className="ni ni-app" />,

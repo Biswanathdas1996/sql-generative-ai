@@ -7,9 +7,22 @@ import ArgonButton from "components/ArgonButton";
 import Table from "examples/Tables/Table";
 import { BASE_URL } from "../../config";
 import ArgonBadge from "components/ArgonBadge";
+import EmbadedModal from "./EmbadedModal";
 
 // eslint-disable-next-line react/prop-types
 function Tables({ data = [] }) {
+  const [open, setOpen] = React.useState(false);
+  const [checkedFile, setCheckedFile] = React.useState(null);
+
+  const handleOpen = (file) => {
+    setOpen(true);
+    setCheckedFile(file);
+  };
+  const handleClose = () => {
+    setOpen(false);
+    setCheckedFile(null);
+  };
+
   const authorsTableData = {
     columns: [
       { name: "Serial", align: "left" },
@@ -53,14 +66,25 @@ function Tables({ data = [] }) {
           />
         ),
         action: (
-          <ArgonButton
-            color="info"
-            size="small"
-            onClick={() => (window.location.href = `#/report?file=${val?.Report}`)}
-            fullWidth
-          >
-            View Report
-          </ArgonButton>
+          <div style={{ display: "flex", justifyContent: "space-around" }}>
+            <ArgonButton
+              color="info"
+              size="small"
+              style={{ margin: 10 }}
+              onClick={() => (window.location.href = `#/report?file=${val?.Report}`)}
+            >
+              View Report
+            </ArgonButton>
+            <br />
+            <ArgonButton
+              color="secondary"
+              size="small"
+              style={{ margin: 10 }}
+              onClick={() => handleOpen(val?.Report)}
+            >
+              Embed Report
+            </ArgonButton>
+          </div>
         ),
       };
     }),
@@ -68,6 +92,12 @@ function Tables({ data = [] }) {
 
   return (
     <>
+      <EmbadedModal
+        open={open}
+        handleClose={handleClose}
+        fileParam={"redd"}
+        checkedFile={checkedFile}
+      />
       <Card>
         <ArgonBox display="flex" justifyContent="space-between" alignItems="center" p={3}>
           <ArgonTypography variant="h6">List of files</ArgonTypography>
